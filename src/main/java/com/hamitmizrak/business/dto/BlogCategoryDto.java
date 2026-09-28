@@ -25,7 +25,7 @@ public class BlogCategoryDto extends AuditingAwareBaseDto implements Serializabl
     private static final long serialVersionUID = 1L;
 
     // ID
-    private Long categoryId;
+    private Long blogCategoryId;
 
     // categoryName
     @NotEmpty(message = "{blog.category.validation.constraints.NotNull.message}")
