@@ -13,7 +13,7 @@ mvn clean package -DskipsTest
 ```sh 
 project name: _2025_backend_1
 spring boot version: 3.3.7
-JDK: 17
+JDK: 25
 git url: https://github.com/hamitmizrak/SpringBoot2026.git
 ```
 ---
