@@ -5,8 +5,8 @@ import com.hamitmizrak.data.entity.BlogCategoryEntity;
 import lombok.experimental.UtilityClass;
 
 // Lombok
-@UtilityClass
-public class BlogCategoryMapper {
+// @UtilityClass
+public class BlogCategoryMapper implements IGenericMapper<BlogCategoryDto,BlogCategoryEntity> {
 
     //toDto
     public BlogCategoryDto toDto(BlogCategoryEntity blogCategoryEntity) {
