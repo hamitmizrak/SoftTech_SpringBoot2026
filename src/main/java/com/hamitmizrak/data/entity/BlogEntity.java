@@ -42,7 +42,8 @@ public class BlogEntity extends AuditingAwareBaseEntity{
 
    /// //////////////////////////////////////////////
     // Relation
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER,optional = false)
+    @JoinColumn(name = "blog_category_id", nullable = false)
     private BlogCategoryEntity blogCategoryEntity;
 } // end BlogEntity
 
