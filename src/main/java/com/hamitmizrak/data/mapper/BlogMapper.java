@@ -7,10 +7,19 @@ import com.hamitmizrak.data.entity.BlogEntity;
 // @UtilityClass
 public class BlogMapper implements IGenericMapper<BlogDto, BlogEntity>  {
 
+    // Const
+    private final BlogCategoryMapper blogCategoryMapper;
+
+    // Constructor
+    public BlogMapper() {
+        this.blogCategoryMapper = new BlogCategoryMapper();
+    }
+
+    // Constructor
+
     //toDto
     public BlogDto toDto(BlogEntity blogEntity) {
         if(blogEntity == null) return null;
-        BlogMapper mapper = new BlogMapper();
 
         return BlogDto.builder()
                 .blogId(blogEntity.getBlogId())
@@ -18,7 +27,7 @@ public class BlogMapper implements IGenericMapper<BlogDto, BlogEntity>  {
                 .title(blogEntity.getTitle())
                 .content(blogEntity.getContent())
                 .image(blogEntity.getImage())
-                .blogCategoryDto(BlogCategoryMapper.toDto(blogEntity.getBlogCategoryEntity()))
+                .blogCategoryDto(blogCategoryMapper.toDto(blogEntity.getBlogCategoryEntity()))
                 .build();
     }
 
@@ -32,7 +41,7 @@ public class BlogMapper implements IGenericMapper<BlogDto, BlogEntity>  {
                 .title(blogDto.getTitle())
                 .content(blogDto.getContent())
                 .image(blogDto.getImage())
-                .blogCategoryEntity(BlogCategoryMapper.toEntity(blogDto.getBlogCategoryDto()))
+                .blogCategoryEntity(blogCategoryMapper.toEntity(blogDto.getBlogCategoryDto()))
                 .build();
     }
 

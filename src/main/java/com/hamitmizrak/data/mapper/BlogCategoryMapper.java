@@ -8,6 +8,8 @@ import lombok.experimental.UtilityClass;
 // @UtilityClass
 public class BlogCategoryMapper implements IGenericMapper<BlogCategoryDto,BlogCategoryEntity> {
 
+
+
     //toDto
     public BlogCategoryDto toDto(BlogCategoryEntity blogCategoryEntity) {
         if(blogCategoryEntity == null) return null;
