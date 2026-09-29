@@ -42,6 +42,8 @@ public class BlogEntity extends AuditingAwareBaseEntity{
 
    /// //////////////////////////////////////////////
     // Relation
+    @ManyToOne
+    private BlogCategoryEntity blogCategoryEntity;
 } // end BlogEntity
 
 

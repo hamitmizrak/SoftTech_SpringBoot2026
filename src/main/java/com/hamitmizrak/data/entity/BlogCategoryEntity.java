@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 
+import java.util.List;
+
 // LOMBOK
 @Getter
 @Setter
@@ -31,7 +33,9 @@ public class BlogCategoryEntity extends AuditingAwareBaseEntity{
     private String categoryName;
 
    /// //////////////////////////////////////////////
-    // Relation
+    // Relation One(CMF)
+    @OneToMany(mappedBy= "blogCategoryEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<BlogEntity> blogEntityList;
 } // end BlogCategoryEntity
 
 
