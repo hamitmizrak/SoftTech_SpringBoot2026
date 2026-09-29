@@ -10,6 +10,7 @@ public class BlogMapper implements IGenericMapper<BlogDto, BlogEntity>  {
     //toDto
     public BlogDto toDto(BlogEntity blogEntity) {
         if(blogEntity == null) return null;
+        BlogMapper mapper = new BlogMapper();
 
         return BlogDto.builder()
                 .blogId(blogEntity.getBlogId())
@@ -17,7 +18,7 @@ public class BlogMapper implements IGenericMapper<BlogDto, BlogEntity>  {
                 .title(blogEntity.getTitle())
                 .content(blogEntity.getContent())
                 .image(blogEntity.getImage())
-                .blogCategoryDto(toDto(blogEntity.getBlogCategoryEntity()).getBlogCategoryDto())
+                .blogCategoryDto(BlogCategoryMapper.toDto(blogEntity.getBlogCategoryEntity()))
                 .build();
     }
 
