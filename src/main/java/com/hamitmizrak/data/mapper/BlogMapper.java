@@ -15,8 +15,6 @@ public class BlogMapper implements IGenericMapper<BlogDto, BlogEntity>  {
         this.blogCategoryMapper = new BlogCategoryMapper();
     }
 
-    // Constructor
-
     //toDto
     public BlogDto toDto(BlogEntity blogEntity) {
         if(blogEntity == null) return null;
