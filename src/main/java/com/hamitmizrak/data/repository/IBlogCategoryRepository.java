@@ -29,7 +29,6 @@ public interface IBlogCategoryRepository extends JpaRepository<BlogCategoryEntit
     List<BlogCategoryEntity> findByCategoryNameStartingWithIgnoreCase(String categoryName); // SQL ==> 'java%'
     List<BlogCategoryEntity> findByCategoryNameEndingWithIgnoreCase(String categoryName); // SQL ==> '%java'
 
-
     // 2-JPQL(Karmaşık Sorgular): ==> Entity + Java Field isimlerini kullanarak SQL Sorguları üretiriz.
     @Query("""
         SELECT  category
@@ -52,8 +51,6 @@ public interface IBlogCategoryRepository extends JpaRepository<BlogCategoryEntit
         LIKE LOWER(CONCAT('%', :categoryName, '%'))
         """)
     Optional<BlogCategoryEntity> searchCategoryByNameJpql(@Param("categoryName") String categoryName);
-
-
 
     // 3-Native Query: ==> Gerçek Database tablo + kolon isimlerini kullanarak SQL Sorguları üretiriz.
 }
