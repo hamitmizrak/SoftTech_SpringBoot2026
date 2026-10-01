@@ -58,6 +58,6 @@ public interface IBlogCategoryRepository extends JpaRepository<BlogCategoryEntit
         SELECT  *
         FROM blog_categories
         WHERE LOWER(category_name) = LOWER(:categoryName)
-        """)
+        """, nativeQuery = true)
     Optional<BlogCategoryEntity> findCategoryByNameNative(@Param("categoryName") String categoryName);
 }
