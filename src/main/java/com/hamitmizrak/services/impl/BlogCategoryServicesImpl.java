@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 // LOMBOK
  @RequiredArgsConstructor //DI
@@ -98,21 +99,37 @@ public class BlogCategoryServicesImpl implements IBlogCategoryServices<BlogCateg
     }
 
     /// ////////////////////////////////////////////////////////////////
+    /// ////////////////////////////////////////////////////////////////
+    /// Generics Validate
+    private <T> void validate(T dto, Function<T,String> nameExtrator, String currentName){
+        // DTO null
+        if(dto==null){
+            throw new NullPointerException("dto is null");
+        }
+
+        // Category name Null/Blank
+        String categoryName = nameExtrator.apply(dto);
+        if(categoryName==null || categoryName.isBlank()){
+            throw new NullPointerException("BlogcategoryName is null");
+        }
+
+        // UPDATE sırasında mevcut isim değişmedikce duplicate sayma
+        boolean sameAsCurrentName = currentName!=null && currentName.equalsIgnoreCase(categoryName);
+        if(!sameAsCurrentName && iBlogCategoryRepository.existsByCategoryNameIgnoreCase(categoryName)){
+            throw new NullPointerException("zaten blogCategoryDto adı bulunmaktadır");
+        }
+
+    }
+
+
+    /// ////////////////////////////////////////////////////////////////
     // CRUD
     // CREATE
     @Override
     @Transactional
     public BlogCategoryDto objectServiceCreate(BlogCategoryDto blogCategoryDto) {
-
-        // Null
-        if(blogCategoryDto==null || blogCategoryDto.getCategoryName()==null || blogCategoryDto.getCategoryName().isBlank()){
-            throw new NullPointerException("BlogCategoryDto adı zorunludur ");
-        }
-
-        // Tekrar eden category varsa
-        if(iBlogCategoryRepository.existsByCategoryNameIgnoreCase(blogCategoryDto.getCategoryName())){
-            throw new NullPointerException("Zaten BlogCategoryDto adı bulunmaktadır. ");
-        }
+        // Validate
+        validate(blogCategoryDto, BlogCategoryDto::getCategoryName,null);
 
         //BlogCategoryEntity created = iBlogCategoryRepository.save(dtoToEntity(blogCategoryDto));
         //return entityToDto(created);
