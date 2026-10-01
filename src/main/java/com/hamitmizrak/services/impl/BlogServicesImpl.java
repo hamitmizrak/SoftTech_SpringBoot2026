@@ -59,8 +59,8 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     }
 
     @Override
-    public List<BlogDto> objectServiceFindById(Long id) {
-        return List.of();
+    public BlogDto objectServiceFindById(Long id) {
+        return null;
     }
 
     @Override
