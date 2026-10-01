@@ -29,7 +29,7 @@ public class BlogCategoryEntity extends AuditingAwareBaseEntity{
     private Long blogCategoryId;
 
     // categoryName
-    @Column(unique = true,nullable = false,length = 250)
+    @Column(name="category_name",unique = true,nullable = false,length = 250)
     private String categoryName;
 
    /// //////////////////////////////////////////////

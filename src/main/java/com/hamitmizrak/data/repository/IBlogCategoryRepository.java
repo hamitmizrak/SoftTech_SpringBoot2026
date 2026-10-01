@@ -53,4 +53,11 @@ public interface IBlogCategoryRepository extends JpaRepository<BlogCategoryEntit
     Optional<BlogCategoryEntity> searchCategoryByNameJpql(@Param("categoryName") String categoryName);
 
     // 3-Native Query: ==> Gerçek Database tablo + kolon isimlerini kullanarak SQL Sorguları üretiriz.
+    @Query(
+        value = """
+        SELECT  *
+        FROM blog_categories
+        WHERE LOWER(category_name) = LOWER(:categoryName)
+        """)
+    Optional<BlogCategoryEntity> findCategoryByNameNative(@Param("categoryName") String categoryName);
 }
