@@ -2,11 +2,13 @@ package com.hamitmizrak.services.impl;
 
 import com.hamitmizrak.bean.ModelMapperBean;
 import com.hamitmizrak.business.dto.BlogDto;
+import com.hamitmizrak.data.entity.BlogCategoryEntity;
 import com.hamitmizrak.data.entity.BlogEntity;
 import com.hamitmizrak.data.mapper.BlogMapper;
 import com.hamitmizrak.data.repository.IBlogCategoryRepository;
 import com.hamitmizrak.data.repository.IBlogRepository;
 import com.hamitmizrak.exception.HamitMizrakException;
+import com.hamitmizrak.exception._404_NotFoundException;
 import com.hamitmizrak.file_upload.ImageService;
 import com.hamitmizrak.services.interfaces.IBlogServices;
 import lombok.RequiredArgsConstructor;
@@ -114,23 +116,66 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
 
     /// ////////////////////////////////////////////////////////////////
     // CRUD
+
+    // BLOG CREATE (RESIMSIZ)
     @Override
     @Transactional
     public BlogDto objectServiceCreate(BlogDto blogDto) {
 
-        return null;
+        // validation
+        validate(blogDto, true);
+
+        // Blog'tan öncesinde kategoriye bakmak zorundayız
+        Long blogCategoryId = blogDto.getBlogCategoryDto()!=null ? blogDto.getBlogCategoryDto().getBlogCategoryId():null;
+        if(blogCategoryId==null) {
+            throw new HamitMizrakException("=== Kategori seçiniz ===");
+        }
+
+        // blog category bul
+        BlogCategoryEntity blogCategoryEntityCreate= iBlogCategoryRepository.findById(blogCategoryId).orElseThrow(()-> new _404_NotFoundException(blogCategoryId+ " id'li kategori bulunamadı"));
+
+        // BlogEntity çağır ve BlogCategory ekle
+        BlogEntity blogEntity = dtoToEntity(blogDto);
+        blogEntity.setBlogCategoryEntity(blogCategoryEntityCreate);
+
+        // Repository Save
+        BlogEntity created = iBlogRepository.save(blogEntity);
+        return entityToDto(created);
     }
 
+    // BLOG CREATE (RESIMLI)
+    @Override
+    public BlogDto objectServiceCreateWithFile(BlogDto blogDto, MultipartFile multipartFile) {
+        if(multipartFile!=null & !multipartFile.isEmpty()) {
+            String relative = imageService.saveBlogImage(multipartFile);
+            blogDto.setImage(relative);
+        }
+        return objectServiceCreate(blogDto);
+    }
+
+
+    /// ////////////////////////////////////////////////////////
+    // BLOG LIST
     @Override
     @Transactional(readOnly = true)
     public List<BlogDto> objectServiceList() {
-        return List.of();
+        return iBlogRepository.findAll().stream().map(this::entityToDto).toList();
     }
 
+
+    // BLOG FIND
     @Override
     @Transactional(readOnly = true)
     public BlogDto objectServiceFindById(Long id) {
-        return null;
+        // Null
+        if(id==null) {
+            throw new NullPointerException("BlogDto ID null ");
+        }
+
+        // Blog Find
+        BlogEntity find = iBlogRepository.findById(id)
+                .orElseThrow(()-> new _404_NotFoundException("Blog id " + id + " blog bulunamadı"));
+        return entityToDto(find);
     }
 
     @Override
@@ -146,11 +191,6 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     }
 
     /// ////////////////////////////////////////////////////////////////
-    // IMAGE
-    @Override
-    public BlogDto objectServiceCreateWithFile(BlogDto blogDto, MultipartFile multipartFile) {
-        return null;
-    }
 
     @Override
     public BlogDto objectServiceUpdateWithFile(Long id, BlogDto blogDto, MultipartFile multipartFile) {

@@ -124,7 +124,7 @@ public class BlogCategoryServicesImpl implements IBlogCategoryServices<BlogCateg
 
     /// ////////////////////////////////////////////////////////////////
     // CRUD
-    // CREATE
+    // BLOG_CATEGORY CREATE
     @Override
     @Transactional
     public BlogCategoryDto objectServiceCreate(BlogCategoryDto blogCategoryDto) {
@@ -136,14 +136,14 @@ public class BlogCategoryServicesImpl implements IBlogCategoryServices<BlogCateg
         return entityToDto(iBlogCategoryRepository.save(dtoToEntity(blogCategoryDto)));
     }
 
-    // LIST
+    // BLOG_CATEGORY LIST
     @Override
     @Transactional(readOnly = true)
     public List<BlogCategoryDto> objectServiceList() {
         return iBlogCategoryRepository.findAll().stream().map(this::entityToDto).toList();
     }
 
-    // FIND
+    // BLOG_CATEGORY FIND
     @Override
     @Transactional(readOnly = true)
     public BlogCategoryDto objectServiceFindById(Long id) {
@@ -156,7 +156,7 @@ public class BlogCategoryServicesImpl implements IBlogCategoryServices<BlogCateg
         return entityToDto(blogCategoryEntityFindById);
     }
 
-    // UPDATE
+    // BLOG_CATEGORY UPDATE
     @Override
     @Transactional
     public BlogCategoryDto objectServiceUpdate(Long id, BlogCategoryDto blogCategoryDto) {
@@ -176,7 +176,7 @@ public class BlogCategoryServicesImpl implements IBlogCategoryServices<BlogCateg
         return entityToDto(iBlogCategoryRepository.save(blogCategoryEntityUpdate)) ;
     }
 
-    // DELETE
+    // BLOG_CATEGORY DELETE
     @Override
     @Transactional
     public BlogCategoryDto objectServiceDelete(Long id) {
