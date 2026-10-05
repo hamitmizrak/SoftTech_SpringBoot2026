@@ -116,7 +116,6 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
 
     /// ////////////////////////////////////////////////////////////////
     // CRUD
-
     // BLOG CREATE (RESIMSIZ)
     @Override
     @Transactional
@@ -162,7 +161,7 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
         return iBlogRepository.findAll().stream().map(this::entityToDto).toList();
     }
 
-
+    /// ////////////////////////////////////////////////////////
     // BLOG FIND
     @Override
     @Transactional(readOnly = true)
@@ -178,25 +177,30 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
         return entityToDto(find);
     }
 
+
+    /// ////////////////////////////////////////////////////////////////
+    // CRUD
+    // BLOG UPDATE (RESIMSIZ)
     @Override
     @Transactional
     public BlogDto objectServiceUpdate(Long id, BlogDto blogDto) {
         return null;
     }
 
-    @Override
-    @Transactional
-    public BlogDto objectServiceDelete(Long id) {
-        return null;
-    }
 
-    /// ////////////////////////////////////////////////////////////////
-
+    // BLOG UPDATE (RESIMLIS)
     @Override
     public BlogDto objectServiceUpdateWithFile(Long id, BlogDto blogDto, MultipartFile multipartFile) {
         return null;
     }
 
+    /// ////////////////////////////////////////////////////////////////
+    // BLOG DELETE
+    @Override
+    @Transactional
+    public BlogDto objectServiceDelete(Long id) {
+        return null;
+    }
 
     /// ////////////////////////////////////////////////////////////////
     // PAGINATION & SORTING
