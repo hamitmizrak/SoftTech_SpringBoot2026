@@ -14,6 +14,9 @@ import com.hamitmizrak.services.interfaces.IBlogServices;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,6 +41,9 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     private final ModelMapperBean modelMapperBean;
     private final BlogMapper blogMapper = new BlogMapper();
 
+    // Sorting Default Fiedl
+    private static final String DEFAULT_SORT_FIELD = "blogId";
+
     /// ///////////////////////////////////////////////////////////////
     // METHOD
     // MODEL MAPPER
@@ -60,57 +66,137 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     }
 
     /// ////////////////////////////////////////////////////////////////
+
+    /// Generics Null Validation
+    private <T> T validateNotNull(T value, String message) {
+        if (value == null) {
+            throw new HamitMizrakException(message);
+        }
+        return value;
+    }
+
+
+    /// Generics String Validation
+    private Long validateId(Long id, String objectName) {
+        validateNotNull(id, objectName + "ID boş olamaz.");
+
+        if (id <= 0) {
+            throw new HamitMizrakException(objectName + "ID 0'dan büyük olmalıdır.");
+        }
+        return id;
+    }
+
+    ///  Generics ValidateBlog Validation
+    private BlogDto validateBlog(BlogDto blogDto, boolean imageRequired) {
+        validateNotNull(blogDto, "Blog verisi boş");
+
+        blogDto.setHeader(validateNotBlank(blogDto.getHeader(), "Blog başlığı zorunludur"));
+        blogDto.setTitle(validateNotBlank(blogDto.getTitle(), "Blog title zorunludur"));
+        blogDto.setContent(validateNotBlank(blogDto.getContent(), "Blog içeriği zorunludur"));
+
+        // Eğer resim eklenecekse
+        if (imageRequired) {
+            blogDto.setImage(validateNotBlank(blogDto.getImage(), "Blog image zorunludur"));
+        }
+        return blogDto;
+    }
+
+    /// validateBlogCategoryId
+    private Long validateBlogCategoryId(BlogDto blogDto, boolean required) {
+        return null;
+    }
+
+    /// Blog Entity Find
+    private BlogEntity findBlogEntityById(Long id) {
+        return null;
+    }
+
+    /// BlogCategoryEntity Find
+    private BlogCategoryEntity findBlogCategoryEntityById(Long id) {
+        return null;
+    }
+
+    /// Delete
+    private void deleteImageSafely(String imageUrl){
+
+    }
+
+
+    /// Generics String Validation
+    private String validateNotBlank(String value, String message) {
+        if (value == null || value.isBlank()) {
+            throw new HamitMizrakException(message);
+        }
+        return value.trim();
+    }
+
+    /// Generics Positive Number Validation
+    private <N extends Number> int validatePositiveNumber(N value, String fieldName) {
+        validateNotNull(value, fieldName + " boş olamaz");
+
+        int number = value.intValue();
+        if (number <= 0) {
+            throw new HamitMizrakException(fieldName + " o'dan büyük olmalıdır");
+        }
+        return number;
+    }
+
+    // Validation  (Not Image)
+    private void validate(BlogDto blogDto, boolean isResult) {
+        // null
+        if (blogDto == null) {
+            throw new HamitMizrakException("Blog verisi boş");
+        }
+
+        if (isResult) {
+            if (blogDto.getHeader() == null || blogDto.getHeader().isBlank()) {
+                throw new HamitMizrakException("Blog başlığı zorunludur");
+            }
+
+            if (blogDto.getContent() == null || blogDto.getContent().isBlank()) {
+                throw new HamitMizrakException("Blog içeriği zorunludur");
+            }
+        }
+    } // end validate
+
+    // Validation  (Not Image)
+    private void validateImage(BlogDto blogDto, boolean isResult) {
+        // null
+        if (blogDto == null) {
+            throw new HamitMizrakException("Blog verisi boş");
+        }
+
+        if (isResult) {
+            if (blogDto.getHeader() == null || blogDto.getHeader().isBlank()) {
+                throw new HamitMizrakException("Blog başlığı zorunludur");
+            }
+
+            if (blogDto.getContent() == null || blogDto.getContent().isBlank()) {
+                throw new HamitMizrakException("Blog içeriği zorunludur");
+            }
+
+            if (blogDto.getImage() == null || blogDto.getImage().isBlank()) {
+                throw new HamitMizrakException("Blog resimi zorunludur");
+            }
+        }
+    } // end validate
+
+    /// ////////////////////////////////////////////////////////////////
+    /// ////////////////////////////////////////////////////////////////
     // SPEED DATA
     @Override
     public List<BlogDto> speedData(Integer data) {
+
+        int dataCount = validatePositiveNumber(data, " Speed Data sayısı");
         return List.of();
     }
+
 
     @Override
     public List<BlogDto> deleteData() {
         return List.of();
     }
 
-    /// ////////////////////////////////////////////////////////////////
-    // Validation  (Not Image)
-    private void validate(BlogDto blogDto, boolean isResult){
-        // null
-        if(blogDto==null) {
-            throw new HamitMizrakException("Blog verisi boş");
-        }
-
-        if(isResult){
-            if (blogDto.getHeader()==null || blogDto.getHeader().isBlank()) {
-                throw new HamitMizrakException("Blog başlığı zorunludur");
-            }
-
-            if (blogDto.getContent()==null || blogDto.getContent().isBlank()) {
-                throw new HamitMizrakException("Blog içeriği zorunludur");
-            }
-        }
-    } // end validate
-
-    // Validation  (Not Image)
-    private void validateImage(BlogDto blogDto, boolean isResult){
-        // null
-        if(blogDto==null) {
-            throw new HamitMizrakException("Blog verisi boş");
-        }
-
-        if(isResult){
-            if (blogDto.getHeader()==null || blogDto.getHeader().isBlank()) {
-                throw new HamitMizrakException("Blog başlığı zorunludur");
-            }
-
-            if (blogDto.getContent()==null || blogDto.getContent().isBlank()) {
-                throw new HamitMizrakException("Blog içeriği zorunludur");
-            }
-
-            if (blogDto.getImage()==null || blogDto.getImage().isBlank()) {
-                throw new HamitMizrakException("Blog resimi zorunludur");
-            }
-        }
-    } // end validate
 
     /// ////////////////////////////////////////////////////////////////
     // CRUD
@@ -123,13 +209,13 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
         validate(blogDto, true);
 
         // Blog'tan öncesinde kategoriye bakmak zorundayız
-        Long blogCategoryId = blogDto.getBlogCategoryDto()!=null ? blogDto.getBlogCategoryDto().getBlogCategoryId():null;
-        if(blogCategoryId==null) {
+        Long blogCategoryId = blogDto.getBlogCategoryDto() != null ? blogDto.getBlogCategoryDto().getBlogCategoryId() : null;
+        if (blogCategoryId == null) {
             throw new HamitMizrakException("=== Kategori seçiniz ===");
         }
 
         // blog category bul
-        BlogCategoryEntity blogCategoryEntityCreate= iBlogCategoryRepository.findById(blogCategoryId).orElseThrow(()-> new _404_NotFoundException(blogCategoryId+ " id'li kategori bulunamadı"));
+        BlogCategoryEntity blogCategoryEntityCreate = iBlogCategoryRepository.findById(blogCategoryId).orElseThrow(() -> new _404_NotFoundException(blogCategoryId + " id'li kategori bulunamadı"));
 
         // BlogEntity çağır ve BlogCategory ekle
         BlogEntity blogEntity = dtoToEntity(blogDto);
@@ -143,7 +229,7 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     // BLOG CREATE (RESIMLI)
     @Override
     public BlogDto objectServiceCreateWithFile(BlogDto blogDto, MultipartFile multipartFile) {
-        if(multipartFile!=null & !multipartFile.isEmpty()) {
+        if (multipartFile != null & !multipartFile.isEmpty()) {
             String relative = imageService.saveBlogImage(multipartFile);
             blogDto.setImage(relative);
         }
@@ -165,13 +251,13 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     @Transactional(readOnly = true)
     public BlogDto objectServiceFindById(Long id) {
         // Null
-        if(id==null) {
+        if (id == null) {
             throw new NullPointerException("BlogDto ID null ");
         }
 
         // Blog Find
         BlogEntity find = iBlogRepository.findById(id)
-                .orElseThrow(()-> new _404_NotFoundException("Blog id " + id + " blog bulunamadı"));
+                .orElseThrow(() -> new _404_NotFoundException("Blog id " + id + " blog bulunamadı"));
         return entityToDto(find);
     }
 
@@ -185,11 +271,11 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
         // validation
         validate(blogDto, true);
 
-        BlogEntity blogEntity =iBlogRepository.findById(id).orElseThrow(()-> new HamitMizrakException(id+ " id'li blog bulunamadı"));
+        BlogEntity blogEntity = iBlogRepository.findById(id).orElseThrow(() -> new HamitMizrakException(id + " id'li blog bulunamadı"));
 
-        if(blogDto.getBlogCategoryDto()!=null && blogDto.getBlogCategoryDto().getBlogCategoryId()!=null) {
+        if (blogDto.getBlogCategoryDto() != null && blogDto.getBlogCategoryDto().getBlogCategoryId() != null) {
             Long blogCategoryId = blogDto.getBlogCategoryDto().getBlogCategoryId();
-            BlogCategoryEntity blogCategoryEntity = iBlogCategoryRepository.findById(blogCategoryId).orElseThrow(()-> new HamitMizrakException(id+ " id'li blog bulunamadı"));
+            BlogCategoryEntity blogCategoryEntity = iBlogCategoryRepository.findById(blogCategoryId).orElseThrow(() -> new HamitMizrakException(id + " id'li blog bulunamadı"));
 
             blogEntity.setBlogCategoryEntity(blogCategoryEntity);
         }
@@ -199,24 +285,24 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     // BLOG UPDATE (RESIMLISIZ)
     @Override
     public BlogDto objectServiceUpdateWithFile(Long id, BlogDto blogDto, MultipartFile multipartFile) {
-        BlogEntity blogEntitycurrent= iBlogRepository.findById(id).orElseThrow(()-> new HamitMizrakException(id+ " id'li blog bulunamadı"));
+        BlogEntity blogEntitycurrent = iBlogRepository.findById(id).orElseThrow(() -> new HamitMizrakException(id + " id'li blog bulunamadı"));
 
         // Güncelenecek resimde eski resimi silmek
-        String oldImageUrl =  blogEntitycurrent.getImage();
+        String oldImageUrl = blogEntitycurrent.getImage();
 
-        if(multipartFile!=null & !multipartFile.isEmpty()) {
+        if (multipartFile != null & !multipartFile.isEmpty()) {
             String relative = imageService.saveBlogImage(multipartFile);
             blogDto.setImage(relative);
         }
 
-        BlogDto blogDtoUpdate =objectServiceUpdate(id, blogDto);
+        BlogDto blogDtoUpdate = objectServiceUpdate(id, blogDto);
 
-        if(multipartFile!=null && !multipartFile.isEmpty() &&
-                oldImageUrl!=null && oldImageUrl.startsWith("/upload/") &&
+        if (multipartFile != null && !multipartFile.isEmpty() &&
+                oldImageUrl != null && oldImageUrl.startsWith("/upload/") &&
                 !oldImageUrl.equals(blogDtoUpdate.getImage())) {
             try {
                 imageService.deleteByUrl(oldImageUrl);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 log.error(e.getMessage());
             }
@@ -233,10 +319,10 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
         BlogEntity findDelete = dtoToEntity(objectServiceFindById(id));
 
         String img = findDelete.getImage();
-        if(img!=null && img.startsWith("/upload/")) {
+        if (img != null && img.startsWith("/upload/")) {
             try {
 
-            }catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 log.error(e.getMessage());
             }
@@ -253,25 +339,50 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     @Override
     @Transactional(readOnly = true)
     public Page<BlogDto> objectServicePagination(int currentPage, int pageSize) {
-        return null;
+        if (currentPage < 0) {
+            throw new HamitMizrakException(currentPage + " currentPage 0 veya daha büyük olmaldıır");
+        }
+        validatePositiveNumber(pageSize, "Page Size");
+
+        // Pageable
+        Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.by(Sort.Direction.ASC, DEFAULT_SORT_FIELD));
+
+        return iBlogRepository.findAll(pageable).map(this::entityToDto);
     }
 
+    // FILTRELEME()
     @Override
     @Transactional(readOnly = true)
     public List<BlogDto> objectServiceListSortedByDefault(String sortedBy) {
-        return List.of();
+        String validatedSortedBy = validateNotBlank(sortedBy, "Sıralama alanı zorunludur");
+
+        return iBlogRepository
+                .findAll(Sort.by(Sort.Direction.ASC, validatedSortedBy))
+                .stream()
+                .map(this::entityToDto)
+                .toList();
     }
 
+    // // Default olan blogID'e göre küçükten büyüğe  doğru sıralansın
     @Override
     @Transactional(readOnly = true)
     public List<BlogDto> objectServiceListSortedByAsc() {
-        return List.of();
+        return iBlogRepository
+                .findAll(Sort.by(Sort.Direction.ASC, DEFAULT_SORT_FIELD))
+                .stream()
+                .map(this::entityToDto)
+                .toList();
     }
 
+    // Default olan blogID'e göre büyükten küçüğe doğru sıralansın
     @Override
     @Transactional(readOnly = true)
     public List<BlogDto> objectServiceListSortedByDesc() {
-        return List.of();
+        return iBlogRepository
+                .findAll(Sort.by(Sort.Direction.DESC, DEFAULT_SORT_FIELD))
+                .stream()
+                .map(this::entityToDto)
+                .toList();
     }
 
     // application.properties ANLAT
