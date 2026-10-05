@@ -274,6 +274,5 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
         return List.of();
     }
 
-
     // application.properties ANLAT
 } // end BlogServicesImpl
