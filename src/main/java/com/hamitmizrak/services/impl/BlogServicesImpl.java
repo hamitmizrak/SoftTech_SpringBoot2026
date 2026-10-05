@@ -34,11 +34,9 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     private final IBlogRepository iBlogRepository;
     private final ImageService imageService;
 
-
     // Mapper
     private final ModelMapperBean modelMapperBean;
     private final BlogMapper blogMapper = new BlogMapper();
-
 
     /// ///////////////////////////////////////////////////////////////
     // METHOD
@@ -201,7 +199,29 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     // BLOG UPDATE (RESIMLISIZ)
     @Override
     public BlogDto objectServiceUpdateWithFile(Long id, BlogDto blogDto, MultipartFile multipartFile) {
-        return null;
+        BlogEntity blogEntitycurrent= iBlogRepository.findById(id).orElseThrow(()-> new HamitMizrakException(id+ " id'li blog bulunamadı"));
+
+        // Güncelenecek resimde eski resimi silmek
+        String oldImageUrl =  blogEntitycurrent.getImage();
+
+        if(multipartFile!=null & !multipartFile.isEmpty()) {
+            String relative = imageService.saveBlogImage(multipartFile);
+            blogDto.setImage(relative);
+        }
+
+        BlogDto blogDtoUpdate =objectServiceUpdate(id, blogDto);
+
+        if(multipartFile!=null && !multipartFile.isEmpty() &&
+                oldImageUrl!=null && oldImageUrl.startsWith("/upload/") &&
+                !oldImageUrl.equals(blogDtoUpdate.getImage())) {
+            try {
+                imageService.deleteByUrl(oldImageUrl);
+            }catch (Exception e) {
+                e.printStackTrace();
+                log.error(e.getMessage());
+            }
+        }
+        return blogDtoUpdate;
     }
 
     /// ////////////////////////////////////////////////////////////////
@@ -209,9 +229,25 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     @Override
     @Transactional
     public BlogDto objectServiceDelete(Long id) {
-        return null;
+
+        BlogEntity findDelete = dtoToEntity(objectServiceFindById(id));
+
+        String img = findDelete.getImage();
+        if(img!=null && img.startsWith("/upload/")) {
+            try {
+
+            }catch (Exception e) {
+                e.printStackTrace();
+                log.error(e.getMessage());
+            }
+        }
+
+        // Delete
+        iBlogRepository.deleteById(id);
+        return entityToDto(findDelete);
     }
 
+    /// ////////////////////////////////////////////////////////////////
     /// ////////////////////////////////////////////////////////////////
     // PAGINATION & SORTING
     @Override
