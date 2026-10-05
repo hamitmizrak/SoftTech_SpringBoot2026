@@ -179,16 +179,26 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
 
 
     /// ////////////////////////////////////////////////////////////////
-    // CRUD
     // BLOG UPDATE (RESIMSIZ)
     @Override
     @Transactional
     public BlogDto objectServiceUpdate(Long id, BlogDto blogDto) {
-        return null;
+
+        // validation
+        validate(blogDto, true);
+
+        BlogEntity blogEntity =iBlogRepository.findById(id).orElseThrow(()-> new HamitMizrakException(id+ " id'li blog bulunamadı"));
+
+        if(blogDto.getBlogCategoryDto()!=null && blogDto.getBlogCategoryDto().getBlogCategoryId()!=null) {
+            Long blogCategoryId = blogDto.getBlogCategoryDto().getBlogCategoryId();
+            BlogCategoryEntity blogCategoryEntity = iBlogCategoryRepository.findById(blogCategoryId).orElseThrow(()-> new HamitMizrakException(id+ " id'li blog bulunamadı"));
+
+            blogEntity.setBlogCategoryEntity(blogCategoryEntity);
+        }
+        return entityToDto(blogEntity);
     }
 
-
-    // BLOG UPDATE (RESIMLIS)
+    // BLOG UPDATE (RESIMLISIZ)
     @Override
     public BlogDto objectServiceUpdateWithFile(Long id, BlogDto blogDto, MultipartFile multipartFile) {
         return null;
@@ -228,4 +238,6 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
         return List.of();
     }
 
+
+    // application.properties ANLAT
 } // end BlogServicesImpl
