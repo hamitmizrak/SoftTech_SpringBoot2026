@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor //DI
 public class FileStorageServiceImpl implements FileStorageService {
 
     private static final List<String> ALLOWED_MIME = List.of(

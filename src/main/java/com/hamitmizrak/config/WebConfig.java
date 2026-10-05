@@ -18,7 +18,7 @@ import java.nio.file.Path;
 import java.util.Locale;
 
 // LOMBOK
-@RequiredArgsConstructor
+@RequiredArgsConstructor //DI
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -68,7 +68,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .exposedHeaders("Content-Disposition", "Content-Type")
                 .allowCredentials(true)
-                .maxAge(3600);
+                .maxAge(3600); // 60*60
     }
 
     @Override
