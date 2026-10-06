@@ -1,4 +1,4 @@
-package com.hamitmizrak.services;
+package com.hamitmizrak.business.services;
 
 import org.springframework.web.multipart.MultipartFile;
 

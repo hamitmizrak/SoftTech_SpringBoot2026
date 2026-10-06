@@ -1,4 +1,4 @@
-package com.hamitmizrak.services.impl;
+package com.hamitmizrak.business.services.impl;
 
 import com.hamitmizrak.bean.ModelMapperBean;
 import com.hamitmizrak.business.dto.BlogDto;
@@ -10,7 +10,7 @@ import com.hamitmizrak.data.repository.IBlogRepository;
 import com.hamitmizrak.exception.HamitMizrakException;
 import com.hamitmizrak.exception._404_NotFoundException;
 import com.hamitmizrak.file_upload.ImageService;
-import com.hamitmizrak.services.interfaces.IBlogServices;
+import com.hamitmizrak.business.services.interfaces.IBlogServices;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;

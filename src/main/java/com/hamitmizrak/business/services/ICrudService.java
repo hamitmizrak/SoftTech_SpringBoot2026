@@ -1,4 +1,4 @@
-package com.hamitmizrak.services;
+package com.hamitmizrak.business.services;
 
 import java.util.List;
 
