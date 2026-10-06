@@ -1,0 +1,38 @@
+@PreAuthorize("isAuthenticated()")                    // login’li herkes
+@PreAuthorize("permitAll()")                          // herkese açık
+@PreAuthorize("hasRole('ADMIN')")                     // sadece ADMIN
+@PreAuthorize("hasAnyRole('ADMIN','EDITOR')")         // ADMIN veya EDITOR
+@PreAuthorize("hasAuthority('PRODUCT_WRITE')")        // spesifik authority
+@PreAuthorize("hasAnyAuthority('P_READ','P_WRITE')")  // birden çok authority
+
+
+******************************************************************************
+
+// Herkes görüntüleyebilir (auth gerekmesin istiyorsan SecurityConfig’te permitAll)
+@PreAuthorize("isAuthenticated()")
+@GetMapping("/list")
+public ResponseEntity<ApiResult<List<AddressDto>>> list() {
+    return ResponseEntity.ok(ApiResult.success(iAddressService.objectServiceList()));
+}
+
+// USER veya ADMIN create edebilsin
+@PreAuthorize("hasAnyRole('USER','ADMIN')")
+@PostMapping("/create")
+public ResponseEntity<ApiResult<?>> create(@Valid @RequestBody AddressDto dto) {
+    return ResponseEntity.ok(ApiResult.success(iAddressService.objectServiceCreate(dto)));
+}
+
+// Kayıt sahibi (id eşleşmesi) veya ADMIN güncelleyebilsin
+// NOT: UserPrincipal içinde getId() / getUserId() hangisi varsa ona göre #id/method param eşleşmesini yap
+@PreAuthorize("hasRole('ADMIN') or #id == principal.id")
+@PutMapping("/update/{id}")
+public ResponseEntity<ApiResult<?>> update(@PathVariable Long id, @Valid @RequestBody AddressDto dto) {
+    return ResponseEntity.ok(ApiResult.success(iAddressService.objectServiceUpdate(id, dto)));
+}
+
+// Sadece ADMIN silebilsin
+@PreAuthorize("hasRole('ADMIN')")
+@DeleteMapping("/delete/{id}")
+public ResponseEntity<ApiResult<?>> delete(@PathVariable Long id) {
+    return ResponseEntity.ok(ApiResult.success(iAddressService.objectServiceDelete(id)));
+}

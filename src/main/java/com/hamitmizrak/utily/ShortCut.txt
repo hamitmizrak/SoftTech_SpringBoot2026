@@ -1,0 +1,96 @@
+Ctrl + N : Dosya Bul
+Ctrl+ Alt + O : Gereksiz dosyaları Sil
+
+IntelliJ IDEA'da sıklıkla kullanılan kısayollar ve açıklamaları:
+
+ 1. Kod Navigasyonu ve Arama
+- Class Bulma: 
+  - Windows/Linux: `Ctrl + N`
+  - Mac: `Command + O`
+  - Açıklama: Projedeki herhangi bir sınıfı ada göre arar.
+
+- Dosya Bulma:
+  - Windows/Linux: `Ctrl + Shift + N`
+  - Mac: `Command + Shift + O`
+  - Açıklama: Projedeki herhangi bir dosyayı ada göre arar.
+
+- Semboller Arasında Arama:
+  - Windows/Linux: `Ctrl + Alt + Shift + N`
+  - Mac: `Command + Option + O`
+  - Açıklama: Projedeki herhangi bir sembolü (değişken, metod, sınıf vb.) arar.
+
+- Son Düzenlenen Dosyaları Göster:
+  - Windows/Linux: `Ctrl + E`
+  - Mac: `Command + E`
+  - Açıklama: En son açılan veya düzenlenen dosyaları listeler.
+
+ 2. Kod Düzenleme
+- Kod Tamamlama:
+  - Windows/Linux: `Ctrl + Space`
+  - Mac: `Control + Space`
+  - Açıklama: Kod tamamlama için öneriler sunar.
+
+- Kod Formatlama:
+  - Windows/Linux: `Ctrl + Alt + L`
+  - Mac: `Command + Option + L`
+  - Açıklama: Seçili kodu veya dosyayı IntelliJ IDEA'nın düzenleme kurallarına göre otomatik olarak biçimlendirir.
+
+- Kullanılmayan Importları Temizleme:
+  - Windows/Linux: `Ctrl + Alt + O`
+  - Mac: `Command + Option + O`
+  - Açıklama: Kullanılmayan tüm importları siler.
+
+- İfadenin Tamamını veya Satırın Geri Kalanını Silme:
+  - Windows/Linux: `Ctrl + Y`
+  - Mac: `Command + Delete`
+  - Açıklama: Satırın geri kalanını veya seçili ifadeyi siler.
+
+ 3. Refactoring
+- Refactor This:
+  - Windows/Linux: `Ctrl + Alt + Shift + T`
+  - Mac: `Control + T`
+  - Açıklama: Kodunuzu yeniden düzenlemenizi sağlayan refactoring seçenekleri sunar.
+
+- Değişken, Metod vb. Yeniden Adlandırma:
+  - Windows/Linux: `Shift + F6`
+  - Mac: `Shift + F6`
+  - Açıklama: Seçilen öğeyi yeniden adlandırır; tüm kullanımları günceller.
+
+ 4. Kod İnceleme ve Çalıştırma
+- Hata Bulma (Debugging) Başlat:
+  - Windows/Linux: `Shift + F9`
+  - Mac: `Control + D`
+  - Açıklama: Uygulamayı hata ayıklama modunda başlatır.
+
+- Çalıştırma (Run):
+  - Windows/Linux: `Shift + F10`
+  - Mac: `Control + R`
+  - Açıklama: Uygulamayı çalıştırır.
+
+- Hata Çıkarma (Step Into):
+  - Windows/Linux: `F7`
+  - Mac: `F7`
+  - Açıklama: Kodda adım adım hata ayıklamaya girer.
+
+- Sonraki Adıma Geçme (Step Over):
+  - Windows/Linux: `F8`
+  - Mac: `F8`
+  - Açıklama: Mevcut adımdan bir sonraki adıma geçer.
+
+ 5. Genel Kısayollar
+- Arama (Search Everywhere):
+  - Windows/Linux: `Shift` tuşuna iki kere basın
+  - Mac: `Shift` tuşuna iki kere basın
+  - Açıklama: Dosya, sınıf, sembol veya herhangi bir şeyi genel olarak arar.
+
+- Proje Gezginini Açma/Kapatma (Project View):
+  - Windows/Linux: `Alt + 1`
+  - Mac: `Command + 1`
+  - Açıklama: Proje dosya gezgini penceresini açar veya kapatır.
+
+- Terminal Açma:
+  - Windows/Linux: `Alt + F12`
+  - Mac: `Option + F12`
+  - Açıklama: IntelliJ IDEA içindeki terminali açar.
+
+Bu kısayollar, IntelliJ IDEA'da hızlı bir şekilde çalışmanızı sağlar ve projelerdeki üretkenliğinizi artırır.
