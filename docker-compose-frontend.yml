@@ -1,0 +1,42 @@
+# mvn clean package
+# mvn clean package -DskipTests
+
+# docker-compose --version
+# docker-compose up
+# docker-compose up -d
+# docker-compose -f docker-compose-frontend.yml up
+# docker-compose down
+# docker-compose restart
+# docker-compose ps
+
+version: '3'
+
+services:
+
+  frontend:
+    container_name: container_blog_react
+    image: image_blog_react
+    build:
+      #context: .
+      context: ../frontend/blog
+      dockerfile: ../frontend/blog/DockerfileFrontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/blog:/usr/src/app     # doğru context bağland
+      - /usr/src/app/node_modules
+    stdin_open: true
+    tty: true
+    networks:
+      - fullstack_network
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+#networks:
+#  spring_react:
+#    name: spring_react
+#    driver: bridge
+
+networks:
+  fullstack_network:
+    external: true

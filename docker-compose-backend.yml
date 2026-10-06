@@ -1,0 +1,28 @@
+# mvn clean package -DskipTests
+# docker compose -f docker-compose-backend.yml up -d --build
+
+version: '3.1'
+
+services:
+  backend:
+    container_name: container_blog_springboot
+    image: image_blog_springboot
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: DockerfileBackend
+    ports:
+      - "5555:5555"
+    environment:
+      # Spring relaxed binding: FILE_UPLOAD_DIR -> file.upload-dir
+      FILE_UPLOAD_DIR: /upload
+      FILE_BASE_URL: http://localhost:5555
+    volumes:
+      # Blog görselleri container yeniden oluşturulsa da kalıcı olur.
+      - ./upload:/upload
+    networks:
+      - fullstack_network
+
+networks:
+  fullstack_network:
+    external: true
