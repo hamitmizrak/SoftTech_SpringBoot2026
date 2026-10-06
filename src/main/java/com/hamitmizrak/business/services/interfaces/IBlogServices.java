@@ -1,7 +1,6 @@
 package com.hamitmizrak.business.services.interfaces;
 
 import com.hamitmizrak.business.services.*;
-import com.hamitmizrak.services.*;
 
 // D: Dto
 // E: Entity
