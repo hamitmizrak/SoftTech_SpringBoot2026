@@ -37,7 +37,7 @@ public class BlogEntity extends AuditingAwareBaseEntity{
     @Lob
     private String content;
 
-    // Image
+    // Image (Opsiyonel)
     private String image;
 
    /// //////////////////////////////////////////////
