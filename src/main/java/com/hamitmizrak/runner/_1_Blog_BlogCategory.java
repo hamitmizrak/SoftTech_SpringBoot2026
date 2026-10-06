@@ -21,7 +21,6 @@ import java.util.UUID;
 @Order(2) // Runner Sırası
 public class _1_Blog_BlogCategory {
 
-
     // INJECTION
     // 1.YOL
     private final IBlogCategoryRepository iBlogCategoryRepository;
