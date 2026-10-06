@@ -23,7 +23,6 @@ import java.util.TimeZone;
 // Dikkat: public class AuditingAwareBean içindeki method ismi:auditorAwareBeanMethod
 @EnableJpaAuditing(auditorAwareRef = "auditingAwareBeanMethod")
 
-
 // Configuration Properties taramasını aç
 //@ConfigurationPropertiesScan(basePackageClasses = com.hamitmizrak.security.jwt.JwtProps.class)
 // Spring Security: Şimdilik dahil etme, çünkü Bcrypted kullancağım ancak Spring security için gerekli kütüphaneleri dahil
@@ -67,7 +66,6 @@ public class SpringBoot2026Application {
     public void init() {
         TimeZone.setDefault(TimeZone.getTimeZone("IST"));
     }
-
 
     // PSVM
     public static void main(String[] args) {

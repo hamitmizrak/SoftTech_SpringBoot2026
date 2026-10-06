@@ -17,7 +17,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>SpringBoot2026</name>
     <description>Spring boot app</description>
-    <url/>
+    <url> </url>
 
     <!-- Proje Lisansı -->
     <licenses>
@@ -88,7 +88,7 @@
     <dependencies>
 
         <!-- #### AOP #################################################  -->
-        <!--<dependency>
+    <!--    <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>-->

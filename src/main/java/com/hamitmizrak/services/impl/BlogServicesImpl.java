@@ -66,7 +66,6 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     }
 
     /// ////////////////////////////////////////////////////////////////
-
     /// Generics Null Validation
     private <T> T validateNotNull(T value, String message) {
         if (value == null) {
@@ -74,7 +73,6 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
         }
         return value;
     }
-
 
     /// Generics String Validation
     private Long validateId(Long id, String objectName) {
@@ -144,7 +142,6 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
             log.error("Blog resmi silinemedi. imageUrl={}, message={}", imageUrl, exception.getMessage(), exception);
         }
     }
-
 
     /// Generics String Validation
     private String validateNotBlank(String value, String message) {
