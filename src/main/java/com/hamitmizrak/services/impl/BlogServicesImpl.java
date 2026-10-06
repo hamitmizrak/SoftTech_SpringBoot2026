@@ -1,6 +1,7 @@
 package com.hamitmizrak.services.impl;
 
 import com.hamitmizrak.bean.ModelMapperBean;
+import com.hamitmizrak.business.dto.BlogCategoryDto;
 import com.hamitmizrak.business.dto.BlogDto;
 import com.hamitmizrak.data.entity.BlogCategoryEntity;
 import com.hamitmizrak.data.entity.BlogEntity;
@@ -21,7 +22,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 // LOMBOK
 @RequiredArgsConstructor //DI
@@ -206,16 +209,41 @@ public class BlogServicesImpl implements IBlogServices<BlogDto, BlogEntity> {
     /// ////////////////////////////////////////////////////////////////
     // SPEED DATA
     @Override
+    @Transactional
     public List<BlogDto> speedData(Integer data) {
-
         int dataCount = validatePositiveNumber(data, " Speed Data sayısı");
-        return List.of();
+
+        // Find first BlogCategory
+        BlogCategoryEntity defaultBlogCategory = iBlogCategoryRepository.findAll().stream().findFirst().orElseThrow(() -> new _404_NotFoundException("Speed Data oluşturmak için en az 1 adet blog category olması gerekiyor."));
+
+        for (int i = 1; i <= dataCount; i++) {
+            BlogEntity blogEntity = BlogEntity.builder()
+                    .header("Blog-" + System.nanoTime())
+                    .title("Blog Title" + i)
+                    .content("BlogContent")
+                    .image(null)
+                    .blogCategoryEntity(defaultBlogCategory)
+                    .build();
+
+            iBlogRepository.save(blogEntity);
+        }
+        return objectServiceListSortedByAsc();
     }
 
 
+    // DELETE ALL
     @Override
+    @Transactional
     public List<BlogDto> deleteData() {
-        return List.of();
+
+        //Dosya Sistemlerinde blog resimlerin hepsini temizle
+        iBlogRepository.findAll().forEach(blogEntity -> deleteImageSafely(blogEntity.getImage()));
+
+        // Database kayıtlarını Temizle
+        iBlogRepository.deleteAll();
+
+        // Silme sonrasında boş liste dönsün
+        return objectServiceList();
     }
 
 
