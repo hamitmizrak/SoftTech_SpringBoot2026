@@ -13,9 +13,9 @@
 
     <!--for project information-->
     <groupId>com.hamitmizrak</groupId>
-    <artifactId>SpringBoot2026</artifactId>
+    <artifactId>SoftTech_SpringBoot2026</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SpringBoot2026</name>
+    <name>SoftTech_SpringBoot2026</name>
     <description>Spring boot app</description>
     <url> </url>
 
