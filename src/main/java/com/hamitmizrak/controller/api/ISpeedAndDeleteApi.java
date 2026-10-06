@@ -15,5 +15,4 @@ public interface ISpeedAndDeleteApi<D> {
     // DELETE ALL
     public ResponseEntity<ApiResult<List<D>>> deleteData();
 
-
 }

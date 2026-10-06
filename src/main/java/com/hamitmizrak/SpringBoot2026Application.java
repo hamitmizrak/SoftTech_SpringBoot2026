@@ -50,8 +50,10 @@ import java.util.TimeZone;
 )*/
 
 @SpringBootApplication(exclude = {
+
         // Spring Security Dahil etme
         org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class})
+
 public class SpringBoot2026Application {
 
     // PostConstruct
