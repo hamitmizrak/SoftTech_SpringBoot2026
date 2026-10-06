@@ -11,18 +11,18 @@ public interface ICrudApi<D,E>{
 
     // CRUD
     // CREATE
-    public ResponseEntity<ApiResult<D>>  objectApiCreate(D d);
+    public ResponseEntity<ApiResult<?>>  objectApiCreate(D d);
 
     // LIST
     public ResponseEntity<ApiResult<List<D>>>   objectApiList();
 
     // FIND BY ID
-    public ResponseEntity<ApiResult<D>>    objectApiFindById(Long id);
+    public ResponseEntity<ApiResult<?>>    objectApiFindById(Long id);
 
     // UPDATE
-    public ResponseEntity<ApiResult<D>>   objectApiUpdate(Long id, D d);
+    public ResponseEntity<ApiResult<?>>   objectApiUpdate(Long id, D d);
 
     // DELETE
-    public ResponseEntity<ApiResult<D>>   objectApiDelete(Long id);
+    public ResponseEntity<ApiResult<?>>   objectApiDelete(Long id);
 
 }
