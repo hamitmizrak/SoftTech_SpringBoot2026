@@ -6,8 +6,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 // D: Dto
-// E: Entity
-public interface ICrudApi<D,E>{
+public interface ICrudApi<D>{
 
     // CRUD
     // CREATE

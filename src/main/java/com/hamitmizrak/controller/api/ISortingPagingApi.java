@@ -5,16 +5,15 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 // D: Dto
-// E: Entity
-public interface ISortingPagingApi<D,E> {
+public interface ISortingPagingApi<D> {
 
     // SORTING AND PAGING
     // PAGINATION
-    public Page<D> objectServicePagination(int currentPage, int pageSize);
+    public Page<D> objectApiPagination(int currentPage, int pageSize);
 
     // SORTING
     // DAtabase içinde herhangi bir kolona göre sıralama yapsın
-    public List<D> objectServiceListSortedByDefault(String sortedBy);
-    public  List<D> objectServiceListSortedByAsc();
-    public  List<D> objectServiceListSortedByDesc();
+    public List<D> objectApiListSortedByDefault(String sortedBy);
+    public  List<D> objectApiListSortedByAsc();
+    public  List<D> objectApiListSortedByDesc();
 }
