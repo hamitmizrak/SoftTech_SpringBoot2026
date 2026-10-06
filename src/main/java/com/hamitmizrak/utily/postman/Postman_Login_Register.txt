@@ -1,0 +1,62 @@
+ https://github.com/hamitmizrak/Ecodation_2025_FullStack_SpringReact_2.git
+-------------------------------------------------
+REGISTER
+
+POST
+http://localhost:4444/register/api/v1.0.0/create/1
+
+{
+  "registerName": "hamit",
+  "registerNickName":"hamit",
+  "registerSurname": "mızrak",
+  "registerEmail": "hamitmizrak@gmail.com",
+  "registerPassword": "Hm123456@.",
+  "registerRePassword": "Hm123456@.",
+  "phoneNumber": "+90 555 000 00 00"
+}
+----------------------------------------------------------------
+yukarıda işlemden sonra denememalatya4444@gmail.com mail gelecek
+tıkladığımda Account_non_lockerd  true olacak
+
+
+-----------------------------------------------------------------
+LOGIN
+
+POST
+http://localhost:4444/auth/api/v1/login
+{
+ "email": "hamitmizrak@gmail.com",
+  "password": "Hm123456@."
+}
+
+Bearer Token vericek:  eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImhhbWl0bWl6cmFrQGdtYWlsLmNvbSIsImlhdCI6MTc1NTk4NTcwMCwiZXhwIjoxNzU1OTg5MzAwfQ.o40Ch1Nd_kBrNzbcSqfxPEmoIUynPrxIRpkEwuhfO-I
+
+------------------------------------------------------
+
+TEST
+
+GET
+http://localhost:4444/role/api/v1.0.0/list
+
+Bearer Token eklemeden 403 alırsın:(HATA)
+
+Bearer Token eklemeden 201 alırsın:(OKEY)
+Postman => Authorization => Beare Token =>
+
+------------------------------------------------------
+Swagger Bearer Token Açmak
+Swagger UI’da token nasıl girilir?
+
+Önce /auth/login veya sizin login endpoint’inizden JWT alın (response body’de accessToken, token, jwt vb.).
+
+Tarayıcıda /swagger (veya /swagger-ui.html) açın.
+Üstte Authorize butonuna tıklayın.
+Açılan pencerede yalnızca raw JWT’yi yapıştırın (örn. eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...).
+
+“Bearer ” yazmayın. Şemayı scheme=bearer yaptığımız için Swagger UI otomatik Authorization: Bearer <token> header’ını oluşturur.
+
+Authorize → Close.
+Artık tüm korunan endpoint çağrılarında header otomatik eklenecek.
+Çıkış yapmak için tekrar Authorize butonuna basıp Logout deyin.
+
+------------------------------------------------------

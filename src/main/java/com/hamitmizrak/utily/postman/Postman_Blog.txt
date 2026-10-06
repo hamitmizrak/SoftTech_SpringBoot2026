@@ -1,0 +1,16 @@
+Method Type: POST
+Url        : http://localhost:4444/blog/api/v1/create
+
+
+{
+"header": "Blog Header",
+"content": "Blog content",
+"title": "Blog title"
+}
+
+
+{
+  "header": "stringstri",
+  "content": "stringstri",
+  "title": "string"
+}
