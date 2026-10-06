@@ -1,7 +1,6 @@
 package com.hamitmizrak.services.impl;
 
 import com.hamitmizrak.bean.ModelMapperBean;
-import com.hamitmizrak.business.dto.BlogCategoryDto;
 import com.hamitmizrak.business.dto.BlogDto;
 import com.hamitmizrak.data.entity.BlogCategoryEntity;
 import com.hamitmizrak.data.entity.BlogEntity;
@@ -22,9 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 // LOMBOK
 @RequiredArgsConstructor //DI
