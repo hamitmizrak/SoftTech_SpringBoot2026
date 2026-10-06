@@ -2,8 +2,8 @@
 
 ## 🔍 Hamit Mızrak Repo İstatistikleri
 
-![Ziyaretçi Sayısı](https://visitor-badge.laobi.icu/badge?page_id=hamitmizrak.https://github.com/hamitmizrak/SpringBoot2026.git)
-![Stars](https://img.shields.io/github/stars/hamitmizrak/https://github.com/hamitmizrak/SpringBoot2026?style=social)
+![Ziyaretçi Sayısı](https://visitor-badge.laobi.icu/badge?page_id=hamitmizrak.https://github.com/hamitmizrak/SoftTech_SpringBoot2026.git)
+![Stars](https://img.shields.io/github/stars/hamitmizrak/https://github.com/hamitmizrak/SoftTech_SpringBoot2026?style=social)
 ![Forks](https://img.shields.io/github/forks/hamitmizrak/https://github.com/hamitmizrak/SpringBoot2026?style=social)
 ![Son Commit](https://img.shields.io/github/last-commit/hamitmizrak/https://github.com/hamitmizrak/SpringBoot2026.gi2)
 ![License](https://img.shields.io/github/license/hamitmizrak/https://https://github.com/hamitmizrak/SpringBoot2026.git)
@@ -44,7 +44,7 @@
 
 ## Project GitHub clone 
 ```sh
-git clone https://github.com/hamitmizrak/SpringBoot2026.git
+git clone https://github.com/hamitmizrak/SoftTech_SpringBoot2026.git
 ```
 ---
 
@@ -74,10 +74,10 @@ docker-compose version
 git init
 git add .
 git commit -m "spring boot init"
-git remote add origin https://github.com/hamitmizrak/SpringBoot2026.git
+git remote add origin https://github.com/hamitmizrak/SoftTech_SpringBoot2026.git
 git push -u origin master
 
-git clone https://github.com/hamitmizrak/SpringBoot2026.git
+git clone https://github.com/hamitmizrak/SoftTech_SpringBoot2026.git
 ```
 ---
 

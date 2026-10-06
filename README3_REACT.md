@@ -5,9 +5,9 @@
 
 ## _N-Tier Architecture_
 
-[![N|GitHub](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/200px-GitHub_Invertocat_Logo.svg.png)]( https://github.com/hamitmizrak/SpringBoot2026.gi)
+[![N|GitHub](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/200px-GitHub_Invertocat_Logo.svg.png)]( https://github.com/hamitmizrak/SoftTech_SpringBoot2026.git)
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)]( https://github.com/hamitmizrak/SpringBoot2026.gi)
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)]( https://github.com/hamitmizrak/SoftTech_SpringBoot2026.git)
 ![README PNG](./image/readme.png)
 
 ---
@@ -16,7 +16,7 @@
 
 Spring Boot And React JS
 
-- git clone  https://github.com/hamitmizrak/SpringBoot2026.gi
+- git clone  https://github.com/hamitmizrak/SoftTech_SpringBoot2026.gi
 
 ---
 
@@ -382,7 +382,7 @@ git push -u origin main
 # Git Clone
 
 ```sh
-git clone  https://github.com/hamitmizrak/SpringBoot2026.gi
+git clone  https://github.com/hamitmizrak/SoftTech_SpringBoot2026.git
 cd 
 npm install
 VEYA
@@ -614,7 +614,7 @@ git branch
 git push -u origin master
 
 git remote -v
-git clone  https://github.com/hamitmizrak/SpringBoot2026.git
+git clone  https://github.com/hamitmizrak/SoftTech_SpringBoot2026.git
 
 git log
 git reset HEAD~8
