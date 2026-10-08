@@ -32,7 +32,7 @@
 
 #  Frontend -2
 
-[GitHub Address](https://github.com/hamitmizrak/SpringBoot2026.git)
+[GitHub Address](https://github.com/hamitmizrak/SoftTech_SpringBoot2026.git)
 
 ---
 
