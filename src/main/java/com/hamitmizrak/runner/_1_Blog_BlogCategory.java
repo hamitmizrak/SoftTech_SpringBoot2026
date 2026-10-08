@@ -14,11 +14,12 @@ import org.springframework.core.annotation.Order;
 import java.util.UUID;
 
 // LOMBOK
-// LOMBOK
 @RequiredArgsConstructor
 @Log4j2
+
+// SPring Boot
 @Configuration
-@Order(2) // Runner Sırası
+@Order(1) // Runner Sırası
 public class _1_Blog_BlogCategory {
 
     // INJECTION
@@ -44,12 +45,12 @@ public class _1_Blog_BlogCategory {
             log.info("Category-Blog CommandLineRunner Çalıştı");
             // Kategoriler Oluştur
 
-            // Tekil Kategory
+            // Tekil Kategory-1
             BlogCategoryEntity computerCategory=new BlogCategoryEntity();
             computerCategory.setCategoryName("Public Server"+ UUID.randomUUID().toString());
             iBlogCategoryRepository.save(computerCategory);
 
-            // Tekil Kategory
+            // Tekil Kategory-2
             BlogCategoryEntity tabletCategory=new BlogCategoryEntity();
             tabletCategory.setCategoryName("Tablet"+UUID.randomUUID().toString());
             iBlogCategoryRepository.save(tabletCategory);
@@ -62,7 +63,7 @@ public class _1_Blog_BlogCategory {
             blogEntity1.setBlogCategoryEntity((computerCategory));
             iBlogRepository.save(blogEntity1);
 
-            // Blog-1
+            // Blog-2
             BlogEntity blogEntity2=new BlogEntity();
             blogEntity2.setHeader("Header-2");
             blogEntity2.setContent("Content-2");
@@ -71,7 +72,7 @@ public class _1_Blog_BlogCategory {
             iBlogRepository.save(blogEntity2);
 
 
-            // Blog-2
+            // Blog-3
             BlogEntity blogEntity3=new BlogEntity();
             blogEntity3.setHeader("Header-3");
             blogEntity3.setContent("Content-3");

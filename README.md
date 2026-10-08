@@ -8,6 +8,14 @@ mvn clean package -DskipsTest
 ```
 ---
 
+## Maven Compiler
+```sh 
+mvn -U clean compile
+mvn clean compile
+mvn spring-boot:run
+```
+---
+
 
 ## Project Information
 ```sh 

@@ -11,6 +11,7 @@ import com.hamitmizrak.utily.FrontEnd;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,8 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
     // DI
     // Field
     private final IBlogServices<BlogDto, BlogEntity> iBlogServices;
+
+
     private final ObjectMapper objectMapper;
     //private final FileProps fileProps;
     //private final JdbcTemplate jdbcTemplate;
@@ -151,28 +154,28 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
     /// PAGINATION & SORTING
     /// PAGINATION
     @Override
-    @GetMapping
+    @GetMapping("a1")
     public Page<BlogDto> objectApiPagination(int currentPage, int pageSize) {
         return null;
     }
 
     ///  SORTING
     @Override
-    @GetMapping
+    @GetMapping("a2")
     public List<BlogDto> objectApiListSortedByDefault(String sortedBy) {
         return List.of();
     }
 
     ///  SORTING ASC
     @Override
-    @GetMapping
+    @GetMapping("a3")
     public List<BlogDto> objectApiListSortedByAsc() {
         return List.of();
     }
 
     ///  SORTING DESC
     @Override
-    @GetMapping
+    @GetMapping("a4")
     public List<BlogDto> objectApiListSortedByDesc() {
         return List.of();
     }
