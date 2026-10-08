@@ -52,7 +52,7 @@ public class CustomErrorHandleWebRequest implements ErrorController {
      * @param webRequest WebRequest: HTTP request abstraction
      * @return ApiResult<Object>: Hata response'u
      */
-    // http://localhost:4444/error
+    // http://localhost:5555/error
     @RequestMapping("/error")
     public ApiResult<Object> handleErrorMethod(WebRequest webRequest) {
 

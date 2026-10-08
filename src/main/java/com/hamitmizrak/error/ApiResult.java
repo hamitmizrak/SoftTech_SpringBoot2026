@@ -38,8 +38,9 @@ public class ApiResult<T> {
     private String error;             // Opsiyonel hata kodu veya kısa açıklama
     private String path;              // Endpoint path
     private Map<String, Object> errors; // Validation hataları
-    private T data;                   // Generic data
     private Date createdDate = new Date(System.currentTimeMillis()); // Oluşturulma zamanı
+
+    private T data;                   // Generic data
 
     // ------------------ Static Factory Methods ------------------
     public static <T> ApiResult<T> success(T data) {

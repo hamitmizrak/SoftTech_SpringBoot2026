@@ -17,7 +17,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>SoftTech_SpringBoot2026</name>
     <description>Spring boot app</description>
-    <url> </url>
+    <url> https://www.</url>
 
     <!-- Proje Lisansı -->
     <licenses>
@@ -80,7 +80,7 @@
         <swagger.version>2.6.0</swagger.version>
 
         <!--20 Aralık 2024 Tarihinde Spring security version: 6.4.2-->
-        <spring.security.version>3.3.4</spring.security.version>
+        <!--<spring.security.version>3.3.4</spring.security.version>-->
     </properties>
 
 
@@ -296,7 +296,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>${spring.security.version}</version>
+            <!--<version>${spring.security.version}</version>-->
         </dependency>
 
         <!--for thymeleaf-->
