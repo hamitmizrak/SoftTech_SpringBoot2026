@@ -149,7 +149,7 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
 
     /// /////////////////////////////////////////////////////////////////////
     /// PAGINATION & SORTING
-    ///  PAGINATION
+    /// PAGINATION
     @Override
     @GetMapping
     public Page<BlogDto> objectApiPagination(int currentPage, int pageSize) {
