@@ -257,6 +257,12 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Spring Boot 4: H2 Console otomatik yapılandırması -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-h2console</artifactId>
+        </dependency>
+
         <!-- RDBMS MYSQL-->
         <!--<dependency>
             <groupId>com.mysql</groupId>
