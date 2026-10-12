@@ -40,10 +40,10 @@ public class SecurityConfig {
      */
     @Bean
     public UserDetailsService userDetailsService(
-            @Value("${app.security.username:admin}")
+            @Value("${app.security.username:hamitmizrak@gmail.com}")
             String username,
 
-            @Value("${app.security.password:admin123}")
+            @Value("${app.security.password:root}")
             String password,
 
             PasswordEncoder passwordEncoder) {
