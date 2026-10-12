@@ -7,8 +7,8 @@ package com.hamitmizrak.security;
 * */
 
 /*
-USERNAME:admin
-PASSWORD:admin123
+USERNAME:hamitmizrak@gmail.com
+PASSWORD:root
 
 localhost:5555
  */
@@ -39,8 +39,8 @@ public class SecurityConfig {
 
     /*
     application.properties => ortam değişkeninin ADMIN bilgileri oluştur
-    app.security.username=${APP_SECURITY_USERNAME:admin}
-    app.security.password=${APP_SECURITY_PASSWORD:admin123}
+    app.security.username=${APP_SECURITY_USERNAME:hamitmizrak@gmail.com}
+    app.security.password=${APP_SECURITY_PASSWORD:root}
      */
     @Bean
     public UserDetailsService userDetailsService(
@@ -58,6 +58,38 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(userDetails);
     }
 
+    /// ADMIN rolü SUPER_ADMIN  kullanıcıları olsun
+    ///  Özel bir sayyaı sadece SUPER_ADMIN erişime sağlayabilsin
+
+    /// ///////////////////////////////////////////////////////////////////
+    private String[] whiteList(){
+        return new String[]{
+                "/",
+                "/index",
+                "/error",
+                "/login",
+                "/public/**",
+                "/swagger-ui.html",
+                "/swagger-ui/**",
+                "/v3/api-docs/**",
+                "/html/**",
+                "/css/**",
+                "/js/**",
+                "/jsx/**",
+                "/ts/**",
+                "/images/**",
+                "/webjars/**",
+                "/assets/**",
+                "/favicon.ico"
+        };
+    }
+
+    /// ///////////////////////////////////////////////////////////////////
+    // Swagger izin
+
+
+    /// ///////////////////////////////////////////////////////////////////
+
     /*
      * Swagger ve H2-Console için anonim erişim sağlansın
      * CSRF sadece H2 Console için devre dışı, diğer entpoint'lerde korunsun
@@ -72,20 +104,7 @@ public class SecurityConfig {
         // httpSecurity
         httpSecurity
                 .authorizeHttpRequests(auth-> auth.requestMatchers(h2Console).permitAll()
-                        .requestMatchers(
-                                "/index",
-                                "/login",
-                                "/error",
-                                "/swagger-ui.html",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/html/**",
-                                "/css/**",
-                                "/js/**",
-                                "/jsx/**",
-                                "/ts/**",
-                                "/images/**"
-                        ).permitAll()
+                        .requestMatchers(whiteList()).permitAll()
                         .anyRequest().authenticated()
                 )
 
