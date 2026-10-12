@@ -13,11 +13,13 @@ PASSWORD:root
 localhost:5555
  */
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +30,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     /*@Value("${app.security.username}")
@@ -52,7 +55,7 @@ public class SecurityConfig {
             PasswordEncoder passwordEncoder) {
             UserDetails userDetails = User.withUsername(username)
                 .password(passwordEncoder.encode(password))
-                .roles("ADMIN")
+                .roles("ADMIN","SUPER_ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(userDetails);
     }
@@ -61,6 +64,7 @@ public class SecurityConfig {
     ///  Özel bir sayyaı sadece SUPER_ADMIN erişime sağlayabilsin
 
     /// ///////////////////////////////////////////////////////////////////
+    /// WHITE_LIST
     private String[] whiteList(){
         return new String[]{
                 "/",
@@ -68,9 +72,6 @@ public class SecurityConfig {
                 "/error",
                 "/login",
                 "/public/**",
-                "/swagger-ui.html",
-                "/swagger-ui/**",
-                "/v3/api-docs/**",
                 "/html/**",
                 "/css/**",
                 "/js/**",
@@ -84,7 +85,47 @@ public class SecurityConfig {
     }
 
     /// ///////////////////////////////////////////////////////////////////
-    // Swagger izin
+    // SWAGGER_UI
+    private String[] swaggerWhiteList(){
+        return new String[]{
+                "/swagger-ui.html",
+                "/swagger-ui/**",
+                "/v3/api-docs",
+                "/v3/api-docs/**",
+        };
+    }
+
+
+    /// ///////////////////////////////////////////////////////////////////
+    // ADMIN
+    private String[] adminMatchers(){
+        return new String[]{
+                "/admin",
+                "/admin/**",
+                "/api/admin/**",
+        };
+    }
+
+    /// ///////////////////////////////////////////////////////////////////
+    // ADMIN
+    private String[] superAdminMatchers(){
+        return new String[]{
+                "/super-admin",
+                "/super-admin/**",
+                "/api/super-admin/**",
+        };
+    }
+    /// ///////////////////////////////////////////////////////////////////
+    /// FormLogin aktifken unauthenticated browser requestleri /login rediredt edebiliri ancak
+    /// Swagger REST entpoint'i çağırdığımızda authentication yoksa bu redirect takip edip
+    private RequestMatcher apiRequestMatcher(){
+        return request -> {
+            String uri = request.getRequestURI();
+            if(uri==null) return false;
+
+            return uri.startsWith("/api/") || uri.startsWith("/rest/") || uri.startsWith("/actuator/");
+        };
+    }
 
 
     /// ///////////////////////////////////////////////////////////////////
@@ -95,10 +136,17 @@ public class SecurityConfig {
      * H2-Console iframe kullanığından SAMEORIGIN gerekir.
      * */
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity httpSecurity,
+            @Value("${app.security.swagger-api-csrf-ignore:true}")
+            boolean swaggerApiCsrfIgnore
+            ) throws Exception{
 
         // H2 Console'nin gerçek yapılandırılmış yolunu eşleştirir
         RequestMatcher h2Console = PathRequest.toH2Console();
+
+        // Swagger/API testlerinde REST entpointlerini ayırt etmek için;
+        RequestMatcher apiMatcher = apiRequestMatcher();
 
         // httpSecurity
         httpSecurity
