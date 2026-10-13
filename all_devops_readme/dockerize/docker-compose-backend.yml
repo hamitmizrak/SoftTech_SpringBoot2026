@@ -9,8 +9,8 @@ services:
     image: image_blog_springboot
     restart: on-failure
     build:
-      context: .
-      dockerfile: DockerfileBackend
+      context: ../..
+      dockerfile: ../DockerfileBackend
     ports:
       - "5555:5555"
     environment:
