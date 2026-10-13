@@ -45,6 +45,7 @@ public class SwaggerBean {
                         .name("licence INC xyz")
                         .url("https://github.com/HamitMizrak")
                 ))
+
                 // Basic Auth Scheme
                 .addSecurityItem(new SecurityRequirement().addList(BASIC_AUTH_SCHEME));
 

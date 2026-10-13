@@ -1,17 +1,6 @@
 package com.hamitmizrak.security.config;
 
-/*
-* Basit Spring Security: JWT ve kullancıı veritabanı yoktur.
-* Swagger/OpenAI : http://localhost:5555/swagger-ui/index.html
-* H2-DB          : http://localhost:5555/h2-console
 
-USERNAME:hamitmizrak@gmail.com
-PASSWORD:root
-
-localhost:5555
- */
-
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -29,35 +18,63 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+/*
+* Basit Spring Security: JWT ve kullancıı veritabanı yoktur.
+* Swagger/OpenAI : http://localhost:5555/swagger-ui/index.html
+* H2-DB          : http://localhost:5555/h2-console
+
+*
+ADMIN
+USERNAME:admin
+PASSWORD:root
+
+SUPER_ADMIN
+USERNAME:superadmin
+PASSWORD:root
+
+
+localhost:5555
+ */
+
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    /*@Value("${app.security.username}")
-    String username;
 
-    @Value("${app.security.password}")
-    String password;*/
-
-    /*
-    application.properties => ortam değişkeninin ADMIN bilgileri oluştur
-    app.security.username=${APP_SECURITY_USERNAME:hamitmizrak@gmail.com}
-    app.security.password=${APP_SECURITY_PASSWORD:root}
-     */
     @Bean
     public UserDetailsService userDetailsService(
-            @Value("${app.security.username:hamitmizrak@gmail.com}")
-            String username,
 
-            @Value("${app.security.password:root}")
-            String password,
+            // ADMIN
+            @Value("${app.security.admin.username:admin}") String adminUsername,
+            @Value("${app.security.admin.password:root}") String adminPassword,
 
+
+            // SUPERADMIN
+            @Value("${app.security.super-admin.username:superadmin}") String superAdminUsername,
+            @Value("${app.security.super-admin.password:root}") String superAdminPassword,
             PasswordEncoder passwordEncoder) {
-        UserDetails userDetails = User.withUsername(username)
-                .password(passwordEncoder.encode(password))
-                .roles("ADMIN", "SUPER_ADMIN")
+
+        // ADMIN AND SUPERADMIN
+        if (adminUsername.isBlank() || superAdminUsername.isBlank()
+                || adminPassword.isBlank() || superAdminPassword.isBlank()
+                || adminUsername.equals(superAdminUsername)) {
+            throw new IllegalArgumentException("ADMIN and SUPER_ADMIN need distinct usernames and noempty password");
+        }
+
+        // UserDetails (ADMIN)
+        UserDetails admin = User.withUsername(adminUsername)
+                .password(passwordEncoder.encode(adminPassword))
+                .roles("ADMIN")
                 .build();
-        return new InMemoryUserDetailsManager(userDetails);
+
+        // UserDetails (SUPER_ADMIN)
+        UserDetails superAdmin = User.withUsername(superAdminUsername)
+                .password(passwordEncoder.encode(superAdminPassword))
+                .roles("SUPER_ADMIN","ADMIN")
+                .build();
+
+        // Database olmadan cache yapı üzerinden olsun
+        return new InMemoryUserDetailsManager(superAdmin);
     }
 
     /// ADMIN rolü SUPER_ADMIN  kullanıcıları olsun
@@ -107,7 +124,7 @@ public class SecurityConfig {
     }
 
     /// ///////////////////////////////////////////////////////////////////
-    // ADMIN
+    // SUPERADMIN
     private String[] superAdminMatchers() {
         return new String[]{
                 "/super-admin",
@@ -124,7 +141,11 @@ public class SecurityConfig {
             String uri = request.getRequestURI();
             if (uri == null) return false;
 
-            return uri.startsWith("/api/") || uri.startsWith("/rest/") || uri.startsWith("/actuator/");
+            return uri.startsWith("/api/")
+                    || uri.startsWith("/rest/")
+                    || uri.startsWith("/blog/api/")
+                    || uri.startsWith("/blog/category/api/")
+                    || uri.startsWith("/actuator/");
         };
     }
 
@@ -166,6 +187,26 @@ public class SecurityConfig {
 
                         .requestMatchers(whiteList())
                         .permitAll()
+
+                        // Sadece Delete-All yetkisi SuperAdmin(+) verildi
+                        .requestMatchers("/blog/api/v1.0.0/delete-all","/blog/category/api/v1.0.0/delete-all").hasRole("SUPER_ADMIN")
+
+                        // CRUD write endpoints for blog and category.
+                        // POST ( ADMIN(+), SUPER_ADMIN(+) )
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/blog/api/v1.0.0/**", "/blog/category/api/v1.0.0/**")
+                        .hasAnyRole("ADMIN", "SUPER_ADMIN")
+
+                        // PUT ( ADMIN(+), SUPER_ADMIN(+) )
+                        .requestMatchers(org.springframework.http.HttpMethod.PUT, "/blog/api/v1.0.0/**", "/blog/category/api/v1.0.0/**")
+                        .hasAnyRole("ADMIN", "SUPER_ADMIN")
+
+                        // PATCH ( ADMIN(+), SUPER_ADMIN(+) )
+                        .requestMatchers(org.springframework.http.HttpMethod.PATCH, "/blog/api/v1.0.0/**", "/blog/category/api/v1.0.0/**")
+                        .hasAnyRole("ADMIN", "SUPER_ADMIN")
+
+                        // DELETE ( ADMIN(+), SUPER_ADMIN(+) )
+                        .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/blog/api/v1.0.0/**", "/blog/category/api/v1.0.0/**")
+                        .hasAnyRole("ADMIN", "SUPER_ADMIN")
 
                         // Sadece SUPER_ADMIN giriş yapabilir.
                         .requestMatchers(superAdminMatchers())

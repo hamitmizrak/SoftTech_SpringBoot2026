@@ -6,16 +6,13 @@ import com.hamitmizrak.business.services.interfaces.IBlogServices;
 import com.hamitmizrak.controller.api.interfaces.IBlogApi;
 import com.hamitmizrak.data.entity.BlogEntity;
 import com.hamitmizrak.error.ApiResult;
-import com.hamitmizrak.file_upload.FileProps;
 import com.hamitmizrak.utily.FrontEnd;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -156,7 +153,7 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
      PathVariable ve RequestParam Arasındaki Farklar
 
     | Özellik             | @PathVariable                                         | @RequestParam                                   |
-    |-------------------- |-------------------------------------------------------|----------------------------------------------------|
+    |-------------------------------------------------------|----------------------------------------------------|
     | Amaç                | URL yolundaki bir parametreyi alır.                   | Sorgu parametrelerini (query parameters) alır.     |
     | Kullanım Yeri       | URL'nin bir parçası olarak tanımlanır.                | URL'deki `?` işaretinden sonra gelen parametrelerle çalışır. |
     | URL Örneği          | `/api/users/{id}`                                     | `/api/users?name=Hamit`                             |
