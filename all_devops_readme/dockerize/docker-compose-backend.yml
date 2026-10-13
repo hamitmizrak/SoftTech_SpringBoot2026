@@ -10,7 +10,7 @@ services:
     restart: on-failure
     build:
       context: ../..
-      dockerfile: ../DockerfileBackend
+      dockerfile: ../Dockerfile
     ports:
       - "5555:5555"
     environment:
