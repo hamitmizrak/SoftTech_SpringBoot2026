@@ -2,11 +2,12 @@
 # mvn clean package -DskipTests
 
 # docker image build -t imageAdi .
+# docker image build -t springBootData .
 # docker container run -d -p 4444:4444 --rm --name blog
 
 # JDK
 #FROM openjdk:17
-FROM openjdk:21-ea
+FROM openjdk:25-ea
 #FROM eclipse-temurin:21
 #FROM eclipse-temurin:21-jre-jammy
 

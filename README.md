@@ -132,6 +132,17 @@ git log
 ---
 
 
+
+## Dockerize
+```sh 
+$ mvn clean -DskipTests package
+# docker image build -t springbootdata .
+# docker container run -d -p 5555:5555 --rm springbootdata
+```
+---
+
+
+
 ### Örnek Kodu Açıklaması:
 ```java
 private ApiResult apiResult;
