@@ -22,6 +22,10 @@ import java.util.List;
 // API
 @RestController
 @RequestMapping("/blog/category/api/v1.0.0")
+//@CrossOrigin
+//@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = FrontEnd.REACT_URL)
+//@CrossOrigin(origins = {FrontEnd.REACT_URL, FrontEnd.ANGULAR_URL})
 @CrossOrigin(origins = FrontEnd.REACT_URL)
 public class BlogCategoryApiImpl implements IBlogCategoryApi<BlogCategoryDto> {
 

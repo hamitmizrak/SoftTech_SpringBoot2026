@@ -214,7 +214,7 @@ public class BlogApiImpl  implements IBlogApi<BlogDto> {
     @Override
     @GetMapping(value = "/sorting")
     public ResponseEntity<List<BlogDto>> objectApiListSortedByDefault(
-            @RequestParam(name="sorted_by", required = false,defaultValue = "detailsEmbeddable.city")  String sortedBy) {
+            @RequestParam(name="sorted_by", required = false,defaultValue = "header")  String sortedBy) {
         return ResponseEntity.ok(iBlogServices.objectServiceListSortedByDefault(sortedBy));
     }
 
