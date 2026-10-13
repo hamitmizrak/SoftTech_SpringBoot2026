@@ -45,13 +45,13 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(
 
             // ADMIN
-            @Value("${app.security.admin.username:admin}") String adminUsername,
-            @Value("${app.security.admin.password:root}") String adminPassword,
+            @Value("${app.security.admin.username}") String adminUsername,
+            @Value("${app.security.admin.password}") String adminPassword,
 
 
             // SUPERADMIN
-            @Value("${app.security.super-admin.username:superadmin}") String superAdminUsername,
-            @Value("${app.security.super-admin.password:root}") String superAdminPassword,
+            @Value("${app.security.super-admin.username}") String superAdminUsername,
+            @Value("${app.security.super-admin.password}") String superAdminPassword,
             PasswordEncoder passwordEncoder) {
 
         // ADMIN AND SUPERADMIN
@@ -74,7 +74,7 @@ public class SecurityConfig {
                 .build();
 
         // Database olmadan cache yapı üzerinden olsun
-        return new InMemoryUserDetailsManager(superAdmin);
+        return new InMemoryUserDetailsManager(admin,superAdmin);
     }
 
     /// ADMIN rolü SUPER_ADMIN  kullanıcıları olsun
